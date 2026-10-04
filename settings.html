@@ -1,0 +1,44 @@
+<div class="venice-image-settings">
+    <div class="inline-drawer">
+        <div class="inline-drawer-toggle inline-drawer-header">
+            <b>Venice Image Generation</b>
+            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+        </div>
+        <div class="inline-drawer-content">
+            <p class="hint">Generate images with Venice AI's image models. Default model is <b>Anime (WAI)</b> — Venice's own anime model.</p>
+
+            <label for="venice_image_api_key">Venice API Key</label>
+            <input id="venice_image_api_key" type="password" class="text_pole" placeholder="Paste your Venice API key" autocomplete="off" />
+            <p class="hint">Same key you use for Venice chat. Stored locally in your SillyTavern settings.</p>
+
+            <label for="venice_image_model">Model</label>
+            <select id="venice_image_model" class="text_pole"></select>
+
+            <label for="venice_image_size">Image Size</label>
+            <select id="venice_image_size" class="text_pole"></select>
+
+            <label for="venice_image_negative">Negative Prompt</label>
+            <textarea id="venice_image_negative" class="text_pole" rows="2"></textarea>
+
+            <label class="checkbox_label" for="venice_image_safe_mode">
+                <input id="venice_image_safe_mode" type="checkbox" />
+                <span>Safe mode (content filter)</span>
+            </label>
+
+            <label class="checkbox_label" for="venice_image_hide_watermark">
+                <input id="venice_image_hide_watermark" type="checkbox" />
+                <span>Hide Venice watermark</span>
+            </label>
+
+            <label class="checkbox_label" for="venice_image_send_to_chat">
+                <input id="venice_image_send_to_chat" type="checkbox" />
+                <span>Send generated images to chat (off = open in new tab)</span>
+            </label>
+
+            <div class="venice-image-buttons">
+                <input id="venice_image_test" class="menu_button" type="button" value="Test Generation" />
+            </div>
+            <p class="hint">Slash command: <code>/vimg your prompt here</code> — add <code>negative="..."</code> for a per-image negative prompt.</p>
+        </div>
+    </div>
+</div>
