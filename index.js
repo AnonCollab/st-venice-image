@@ -249,11 +249,73 @@ function wireSettingsHtml() {
     });
 }
 
+function stripHtml(html) {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return (div.textContent || div.innerText || '').trim();
+}
+
+async function generateFromMessage(messageId) {
+    const context = getContext();
+    const message = context.chat[messageId];
+    if (!message) {
+        return;
+    }
+    let prompt = stripHtml(message.mes || '');
+    if (!prompt) {
+        toastr.warning('Message is empty.', 'Venice Image');
+        return;
+    }
+    // Keep prompts at a reasonable length for the image model
+    if (prompt.length > 1500) {
+        prompt = prompt.slice(0, 1500);
+    }
+    try {
+        toastr.info('Generating image from message...', 'Venice Image');
+        const base64 = await generateVeniceImage(prompt, '');
+        await sendImageToChat(`Image for: ${prompt.slice(0, 120)}${prompt.length > 120 ? '...' : ''}`, base64);
+        toastr.success('Image generated.', 'Venice Image');
+    } catch (error) {
+        toastr.error(error?.message || String(error), 'Venice Image');
+    }
+}
+
+function addMessageButton(messageId) {
+    const context = getContext();
+    const message = context.chat[messageId];
+    // Only on character messages, not user/system
+    if (!message || message.is_user || message.is_system) {
+        return;
+    }
+    const messageElement = $(`.mes[mesid="${messageId}"]`);
+    const buttonsContainer = messageElement.find('.mes_buttons');
+    if (!buttonsContainer.length || buttonsContainer.find('.venice-img-btn').length) {
+        return;
+    }
+    const button = $('<div class="mes_button venice-img-btn fa-solid fa-image" title="Generate image with Venice"></div>');
+    button.on('click', () => generateFromMessage(messageId));
+    buttonsContainer.append(button);
+}
+
+function registerMessageButtons() {
+    eventSource.on(event_types.CHARACTER_MESSAGE_RENDERED, (messageId) => {
+        addMessageButton(messageId);
+    });
+    // Add to messages already rendered
+    const context = getContext();
+    if (Array.isArray(context.chat)) {
+        for (let i = 0; i < context.chat.length; i++) {
+            addMessageButton(i);
+        }
+    }
+}
+
 jQuery(async () => {
     loadSettings();
     const settingsHtml = await $.get(`${extensionFolderPath}/settings.html`);
     $('#extensions_settings').append(settingsHtml);
     wireSettingsHtml();
     registerSlashCommand();
+    registerMessageButtons();
     console.log('[Venice Image] extension loaded');
 });
