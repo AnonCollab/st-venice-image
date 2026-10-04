@@ -7,7 +7,7 @@ import { getMessageTimeStamp } from '../../../RossAscends-mods.js';
 import { eventSource, event_types } from '../../../../script.js';
 import { MEDIA_DISPLAY, MEDIA_SOURCE, MEDIA_TYPE } from '../../../constants.js';
 
-const extensionName = 'venice-image';
+const extensionName = 'st-venice-image';
 const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
 
 const MODELS = [
