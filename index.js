@@ -4,7 +4,7 @@ import { SlashCommand } from '../../../slash-commands/SlashCommand.js';
 import { ARGUMENT_TYPE, SlashCommandArgument, SlashCommandNamedArgument } from '../../../slash-commands/SlashCommandArgument.js';
 import { saveBase64AsFile } from '../../../utils.js';
 import { getMessageTimeStamp } from '../../../RossAscends-mods.js';
-import { eventSource, event_types } from '../../../script.js';
+import { eventSource, event_types } from '../../../../script.js';
 import { MEDIA_DISPLAY, MEDIA_SOURCE, MEDIA_TYPE } from '../../../constants.js';
 
 const extensionName = 'venice-image';
