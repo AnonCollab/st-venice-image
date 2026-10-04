@@ -298,16 +298,31 @@ function addMessageButton(messageId) {
 }
 
 function registerMessageButtons() {
+    const attachToRendered = () => {
+        $('.mes').each(function () {
+            const mesid = $(this).attr('mesid');
+            if (mesid !== undefined && mesid !== null) {
+                addMessageButton(Number(mesid));
+            }
+        });
+    };
+
+    // Catch messages rendered after we load
     eventSource.on(event_types.CHARACTER_MESSAGE_RENDERED, (messageId) => {
-        addMessageButton(messageId);
+        addMessageButton(Number(messageId));
     });
-    // Add to messages already rendered
-    const context = getContext();
-    if (Array.isArray(context.chat)) {
-        for (let i = 0; i < context.chat.length; i++) {
-            addMessageButton(i);
-        }
+
+    // Watch the chat DOM for messages added at any time (handles all load orders)
+    const chatEl = document.getElementById('chat');
+    if (chatEl) {
+        const observer = new MutationObserver(() => attachToRendered());
+        observer.observe(chatEl, { childList: true, subtree: true });
     }
+
+    // Initial pass for messages already on screen
+    attachToRendered();
+    // One more pass after a short delay in case rendering is still in flight
+    setTimeout(attachToRendered, 1500);
 }
 
 jQuery(async () => {
