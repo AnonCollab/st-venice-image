@@ -32,6 +32,10 @@ With a per-image negative prompt:
 
 A **Test Generation** button in the settings panel generates a sample image.
 
+## Message button
+
+Every character message gets a small image button in its action bar. Click it to generate an image from that message's text with Venice — handy for illustrating Veyra's responses.
+
 ## Defaults
 
 - Model: `wai-Illustrious` (Anime WAI — Venice's own anime model, recommended for anime)
