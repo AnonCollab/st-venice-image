@@ -1,0 +1,28 @@
+.venice-image-settings .hint {
+    opacity: 0.7;
+    font-size: 0.9em;
+    margin: 6px 0;
+}
+
+.venice-image-settings label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.venice-image-settings .text_pole {
+    width: 100%;
+}
+
+.venice-image-settings .checkbox_label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: normal;
+    margin-top: 8px;
+}
+
+.venice-image-buttons {
+    margin-top: 12px;
+}
